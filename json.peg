@@ -1,0 +1,38 @@
+# JSON Grammar for PEG Parser
+# Based on standard JSON specification
+
+package json
+
+import "os"
+
+type Json Peg {
+    // JSON parser type
+}
+
+# Entry point
+Value <- String / Number / Object / Array / "true" / "false" / "null"
+
+# String with escape sequences
+#String <- '"' (![\\"] . / Escape)* '"'
+String <- '"' (![\\"] .)* '"'
+
+# Escape sequences
+#Escape <- "\\" (
+#    "\"" / "\\" / "/" /
+#    "b" / "f" / "n" / "r" / "t" /
+#    "u" Hex Hex Hex Hex
+#)
+
+# Hexadecimal digit
+Hex <- [0-9a-fA-F]
+
+# Number (integer or decimal)
+Number <- '-'? Integer ('.' [0-9]+)? ([eE] [-+]? [0-9]+)?
+
+Integer <- '0' / [1-9] [0-9]*
+
+# Object
+Object <- '{' (String ':' Value (',' String ':' Value)*)? '}'
+
+# Array
+Array <- '[' (Value (',' Value)*)? ']'

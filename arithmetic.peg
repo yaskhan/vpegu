@@ -1,0 +1,23 @@
+# Arithmetic Expression Grammar
+# Supports basic arithmetic operations with precedence
+
+package arithmetic
+
+type Arithmetic Peg {
+    // Arithmetic parser type
+}
+
+# Entry point
+Expression <- Term ('+' Term / '-' Term)*
+
+# Term handles multiplication and division
+Term <- Factor ('*' Factor / '/' Factor)*
+
+# Factor handles numbers and parentheses
+Factor <- Number / '(' Expression ')'
+
+# Number (integer or decimal)
+Number <- '-'? [0-9]+ ('.' [0-9]+)?
+
+# Whitespace (optional)
+Space <- [ \t\r\n]*
